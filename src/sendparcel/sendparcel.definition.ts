@@ -1,6 +1,6 @@
 import { LoggerService } from '@nestjs/common';
 
-export const CONFIG_OPTIONS = 'EASYPARCEL_CONFIG_OPTIONS';
+export const CONFIG_OPTIONS = 'SENDPARCEL_CONFIG_OPTIONS';
 
 export enum HttpMethod {
   GET = 'get',
@@ -10,8 +10,8 @@ export enum HttpMethod {
   DELETE = 'delete',
 }
 
-export interface EasyparcelOptions {
+export interface SendparcelOptions {
   apiKey: string;
-  sandbox: boolean;
+  demo: boolean;
   logger?: LoggerService;
 }

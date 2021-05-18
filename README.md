@@ -4,7 +4,7 @@
 
 ## Description
 
-Easyparcel api wrapper for NestJs
+Sendparcel api wrapper for NestJs
 
 ## Installation
 

@@ -1,3 +1,3 @@
-export * from './easyparcel/easyparcel.definition';
-export * from './easyparcel/easyparcel.module';
-export * from './easyparcel/easyparcel.service';
+export * from './sendparcel/sendparcel.definition';
+export * from './sendparcel/sendparcel.module';
+export * from './sendparcel/sendparcel.service';
