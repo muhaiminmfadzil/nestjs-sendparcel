@@ -35,4 +35,13 @@ describe('Sendparcel Service', () => {
       expect(me.message).toBe('success');
     });
   });
+
+  describe('Get postcode details', () => {
+    it('should return postcode details', async () => {
+      const postcode = await service.getPostcodeDetails({ postcode: '08000' });
+      expect(postcode.status).toBe(true);
+      expect(postcode.message).toBe('success');
+      expect(postcode.data.city).toBe('Sungai Petani');
+    });
+  });
 });

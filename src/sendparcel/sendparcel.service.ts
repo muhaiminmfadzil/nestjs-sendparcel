@@ -1,4 +1,5 @@
 import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
+import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import {
   CONFIG_OPTIONS,
   SendparcelOptions,
@@ -123,10 +124,10 @@ export class SendparcelService {
     return await api();
   }
 
-  // async makeOrder(data: MakeOrderDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPSubmitOrderBulk');
-  //   return await api({ bulk: [...data.bulk] });
-  // }
+  async getPostcodeDetails(data: GetPostcodeDetailsDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_postcode_details');
+    return await api(data);
+  }
 
   // async orderPayment(data: OrderPaymentDto) {
   //   const api = this.getApiCaller(HttpMethod.POST, 'EPPayOrderBulk');
