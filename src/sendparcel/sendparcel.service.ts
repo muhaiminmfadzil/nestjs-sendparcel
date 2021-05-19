@@ -4,6 +4,7 @@ import { CheckPriceDto } from './dto/check-price.dto';
 import { CheckoutDto } from './dto/checkout.dto';
 import { CreateBulkAwbDto } from './dto/create-awb-bulk.dto';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
+import { GetBulkTrackingNoDto } from './dto/get-bulk-tracking-no.dto';
 import { GetConsignmentNoteDto } from './dto/get-consignment-note.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import { GetShipmentsDto } from './dto/get-shipments.dto';
@@ -186,6 +187,11 @@ export class SendparcelService {
 
   async createBulkAwb(data: CreateBulkAwbDto) {
     const api = this.getApiCaller(HttpMethod.POST, 'create_bulk_awb');
+    return await api(data);
+  }
+
+  async getBulkTrackingNo(data: GetBulkTrackingNoDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_bulk_tracking_no');
     return await api(data);
   }
 }

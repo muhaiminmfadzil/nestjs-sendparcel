@@ -358,12 +358,14 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Create awb bulk', () => {
+  describe('Create awb bulk and bulk tracking no', () => {
+    const orderId = nanoid();
+    const orderId2 = nanoid();
+    const orderId3 = nanoid();
+
     it('should return awb detail for single item', async () => {
       // Override timeout jest
       jest.setTimeout(30000);
-
-      const orderId = nanoid();
 
       const awbBulk = await service.createBulkAwb({
         shipments: [
@@ -405,9 +407,6 @@ describe('Sendparcel Service', () => {
     it('should return awb bulk detail for multiple items', async () => {
       // Override timeout jest
       jest.setTimeout(30000);
-
-      const orderId2 = nanoid();
-      const orderId3 = nanoid();
 
       const awbBulk = await service.createBulkAwb({
         shipments: [
@@ -471,6 +470,27 @@ describe('Sendparcel Service', () => {
       expect(awbBulk.data.tracking_no).toHaveLength(2);
       expect(awbBulk.data.tracking_no[0].integration_order_id).toBe(orderId2);
       expect(awbBulk.data.tracking_no[1].integration_order_id).toBe(orderId3);
+    });
+
+    it('should return tracking detail for single item', async () => {
+      const tracking = await service.getBulkTrackingNo({
+        integration_order_id: [orderId],
+      });
+      expect(tracking.status).toBe(true);
+      expect(tracking.message).toBe('success');
+      expect(tracking).toHaveProperty('data');
+      expect(tracking.data.tracking_no).toHaveLength(1);
+      expect(tracking.data.tracking_no[0].integration_order_id).toBe(orderId);
+    });
+
+    it('should return tracking detail for multiple items', async () => {
+      const tracking = await service.getBulkTrackingNo({
+        integration_order_id: [orderId2, orderId3],
+      });
+      expect(tracking.status).toBe(true);
+      expect(tracking.message).toBe('success');
+      expect(tracking).toHaveProperty('data');
+      expect(tracking.data.tracking_no).toHaveLength(2);
     });
   });
 });
