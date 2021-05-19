@@ -99,7 +99,10 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Create shipment', () => {
+  describe('Create shipment and checkout', () => {
+    const singleShipmentKey: string[] = [];
+    const multipleShipmentKey: string[] = [];
+
     it('should return shipment with success status', async () => {
       const shipment = await service.createShipment({
         send_method: 'dropoff',
@@ -116,7 +119,7 @@ describe('Sendparcel Service', () => {
         sender_email: 'muhaiminmfadzil@gmail.com',
         sender_address_line_1: 'Hello World',
         sender_postcode: '55100',
-        receiver_name: 'Tun Mahathir',
+        receiver_name: 'Tun Mahathir 1',
         receiver_phone: '0199999999',
         receiver_email: 'tun@mahathir.com',
         receiver_address_line_1: 'Jabatan Perdana Menteri',
@@ -130,6 +133,8 @@ describe('Sendparcel Service', () => {
       expect(shipment.message).toBe('success');
       expect(shipment).toHaveProperty('data');
       expect(shipment.data.send_method).toBe('dropoff');
+      // First data
+      singleShipmentKey.push(shipment.data.key);
     });
 
     it('should return postcode error status', async () => {
@@ -162,6 +167,87 @@ describe('Sendparcel Service', () => {
       expect(shipment.message).toBe(
         'Receiver Postcode [receiver_postcode] is invalid',
       );
+    });
+
+    it('should return single checkout details', async () => {
+      // Override timeout jest
+      jest.setTimeout(30000);
+
+      const checkout = await service.checkout({
+        shipment_keys: singleShipmentKey,
+      });
+      expect(checkout.status).toBe(true);
+      expect(checkout.message).toBe('success');
+      expect(checkout).toHaveProperty('data');
+      expect(checkout.data.shipments[0].key).toBe(singleShipmentKey[0]);
+    });
+
+    it('should return multiple checkout details', async () => {
+      // Override timeout jest
+      jest.setTimeout(30000);
+
+      // Create multiple shipments for testing
+      const shipment1 = await service.createShipment({
+        send_method: 'dropoff',
+        send_date: '2021-06-01',
+        type: 'document',
+        declared_weight: '0.1',
+        size: 'flyers_l',
+        provider_code: 'poslaju',
+        content_type: 'general',
+        content_description: 'DIY item',
+        content_value: '15',
+        sender_name: 'Muhaimin bin Mohd Fadzil',
+        sender_phone: '0174170019',
+        sender_email: 'muhaiminmfadzil@gmail.com',
+        sender_address_line_1: 'Hello World',
+        sender_postcode: '55100',
+        receiver_name: 'Tun Mahathir 2',
+        receiver_phone: '0199999999',
+        receiver_email: 'tun@mahathir.com',
+        receiver_address_line_1: 'Jabatan Perdana Menteri',
+        receiver_address_line_2: 'Bulatan Utama Putrajaya',
+        receiver_address_line_3: '',
+        receiver_address_line_4: '',
+        receiver_postcode: '62000',
+        receiver_country_code: 'MY',
+      });
+      const shipment2 = await service.createShipment({
+        send_method: 'dropoff',
+        send_date: '2021-06-01',
+        type: 'document',
+        declared_weight: '0.1',
+        size: 'flyers_l',
+        provider_code: 'poslaju',
+        content_type: 'general',
+        content_description: 'DIY item',
+        content_value: '15',
+        sender_name: 'Muhaimin bin Mohd Fadzil',
+        sender_phone: '0174170019',
+        sender_email: 'muhaiminmfadzil@gmail.com',
+        sender_address_line_1: 'Hello World',
+        sender_postcode: '55100',
+        receiver_name: 'Tun Mahathir 3',
+        receiver_phone: '0199999999',
+        receiver_email: 'tun@mahathir.com',
+        receiver_address_line_1: 'Jabatan Perdana Menteri',
+        receiver_address_line_2: 'Bulatan Utama Putrajaya',
+        receiver_address_line_3: '',
+        receiver_address_line_4: '',
+        receiver_postcode: '62000',
+        receiver_country_code: 'MY',
+      });
+      // Get shipment keys
+      multipleShipmentKey.push(shipment1.data.key);
+      multipleShipmentKey.push(shipment2.data.key);
+
+      // Checkout multiple keys
+      const checkout = await service.checkout({
+        shipment_keys: multipleShipmentKey,
+      });
+      expect(checkout.status).toBe(true);
+      expect(checkout.message).toBe('success');
+      expect(checkout).toHaveProperty('data');
     });
   });
 

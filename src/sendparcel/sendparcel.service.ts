@@ -1,5 +1,6 @@
 import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { CheckPriceDto } from './dto/check-price.dto';
+import { CheckoutDto } from './dto/checkout.dto';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import {
@@ -7,7 +8,7 @@ import {
   SendparcelOptions,
   HttpMethod,
 } from './sendparcel.definition';
-
+const formurlencoded = require('form-urlencoded');
 @Injectable()
 export class SendparcelService {
   // Api endpoint
@@ -40,13 +41,6 @@ export class SendparcelService {
 
   private getUrl(endpoint: string) {
     return `${this.baseUrl}${endpoint}`;
-  }
-
-  private formUrlEncoded(obj: any) {
-    return Object.keys(obj).reduce(
-      (p, c) => p + `&${c}=${encodeURIComponent(obj[c])}`,
-      '',
-    );
   }
 
   private getApiCaller(httpMethod: HttpMethod, endpoint: string) {
@@ -84,7 +78,7 @@ export class SendparcelService {
     if (httpMethod === HttpMethod.POST) {
       return (data = {}, options = {}) => {
         const dataObj = { ...data, api_key: this.apiKey };
-        const formData = this.formUrlEncoded(dataObj);
+        const formData = formurlencoded(dataObj);
 
         return this.httpService
           .post(url, formData, { ...options, headers })
@@ -97,7 +91,7 @@ export class SendparcelService {
     if (httpMethod === HttpMethod.PUT) {
       return (data = {}, options = {}) => {
         const dataObj = { ...data, api_key: this.apiKey };
-        const formData = this.formUrlEncoded(dataObj);
+        const formData = formurlencoded(dataObj);
 
         return this.httpService
           .put(url, formData, { ...options, headers })
@@ -110,7 +104,7 @@ export class SendparcelService {
     if (httpMethod === HttpMethod.PATCH) {
       return (data = {}, options = {}) => {
         const dataObj = { ...data, api_key: this.apiKey };
-        const formData = this.formUrlEncoded(dataObj);
+        const formData = formurlencoded(dataObj);
 
         return this.httpService
           .patch(url, formData, { ...options, headers })
@@ -154,5 +148,10 @@ export class SendparcelService {
   async getCartItems() {
     const api = this.getApiCaller(HttpMethod.POST, 'get_cart_items');
     return await api();
+  }
+
+  async checkout(data: CheckoutDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'checkout');
+    return await api(data);
   }
 }
