@@ -12,16 +12,16 @@
   ],
   "keywords": [
     "nestjs",
-    "easyparcel"
+    "sendparcel"
   ],
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/muhaiminmfadzil/nestjs-easyparcel"
+    "url": "https://github.com/muhaiminmfadzil/nestjs-sendparcel"
   },
-  "bugs": "https://github.com/muhaiminmfadzil/nestjs-easyparcel/issues",
+  "bugs": "https://github.com/muhaiminmfadzil/nestjs-sendparcel/issues",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
