@@ -2,6 +2,7 @@ import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { CheckPriceDto } from './dto/check-price.dto';
 import { CheckoutDto } from './dto/checkout.dto';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
+import { GetConsignmentNoteDto } from './dto/get-consignment-note.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import { GetShipmentsDto } from './dto/get-shipments.dto';
 import {
@@ -169,5 +170,10 @@ export class SendparcelService {
   async getShipmentHistory() {
     const api = this.getApiCaller(HttpMethod.POST, 'get_shipment_history');
     return await api();
+  }
+
+  async getConsigmentNote(data: GetConsignmentNoteDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_consignment_note');
+    return await api(data);
   }
 }
