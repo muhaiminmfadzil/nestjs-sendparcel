@@ -3,6 +3,7 @@ import { CheckPriceDto } from './dto/check-price.dto';
 import { CheckoutDto } from './dto/checkout.dto';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
+import { GetShipmentsDto } from './dto/get-shipments.dto';
 import {
   CONFIG_OPTIONS,
   SendparcelOptions,
@@ -158,5 +159,10 @@ export class SendparcelService {
   async getShipmentStatus() {
     const api = this.getApiCaller(HttpMethod.POST, 'get_shipment_statuses');
     return await api();
+  }
+
+  async getShipments(data: GetShipmentsDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_shipments');
+    return await api(data);
   }
 }

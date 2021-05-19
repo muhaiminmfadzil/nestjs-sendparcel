@@ -251,21 +251,51 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Get cart items', () => {
+  xdescribe('Get cart items', () => {
     it('should return cart items', async () => {
-      const parcels = await service.getCartItems();
-      expect(parcels.status).toBe(true);
-      expect(parcels.message).toBe('success');
-      expect(parcels).toHaveProperty('data');
+      const cart = await service.getCartItems();
+      expect(cart.status).toBe(true);
+      expect(cart.message).toBe('success');
+      expect(cart).toHaveProperty('data');
     });
   });
 
-  describe('Get shipment status', () => {
-    it('should shipment status', async () => {
-      const parcels = await service.getCartItems();
-      expect(parcels.status).toBe(true);
-      expect(parcels.message).toBe('success');
-      expect(parcels).toHaveProperty('data');
+  xdescribe('Get shipment status', () => {
+    it('should return shipment status', async () => {
+      const shipment = await service.getShipmentStatus();
+      expect(shipment.status).toBe(true);
+      expect(shipment.message).toBe('success');
+      expect(shipment).toHaveProperty('data');
+    });
+  });
+
+  xdescribe('Get shipments', () => {
+    it('should return shipment for single item', async () => {
+      const singleItem = ['5be39a53015bde092b44373bab440348'];
+
+      const shipment = await service.getShipments({
+        shipment_keys: singleItem,
+      });
+      expect(shipment.status).toBe(true);
+      expect(shipment.message).toBe('success');
+      expect(shipment).toHaveProperty('data');
+      expect(shipment.data).toHaveProperty(singleItem[0]);
+    });
+
+    it('should return shipment for multiple items', async () => {
+      const multipleItems = [
+        '5be39a53015bde092b44373bab440348',
+        '8fce7705896f1dbfdf3e21b5fc1ff390',
+      ];
+
+      const shipment = await service.getShipments({
+        shipment_keys: multipleItems,
+      });
+      expect(shipment.status).toBe(true);
+      expect(shipment.message).toBe('success');
+      expect(shipment).toHaveProperty('data');
+      expect(shipment.data).toHaveProperty(multipleItems[0]);
+      expect(shipment.data).toHaveProperty(multipleItems[1]);
     });
   });
 });
