@@ -1,4 +1,5 @@
 import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
+import { CheckPriceDto } from './dto/check-price.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import {
   CONFIG_OPTIONS,
@@ -129,38 +130,18 @@ export class SendparcelService {
     return await api(data);
   }
 
-  // async orderPayment(data: OrderPaymentDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPPayOrderBulk');
-  //   return await api({ bulk: [...data.bulk] });
-  // }
+  async checkPrice(data: CheckPriceDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'check_price');
+    return await api(data);
+  }
 
-  // async checkOrderStatus(data: CheckOrderStatusDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPOrderStatusBulk');
-  //   return await api({ bulk: [...data.bulk] });
-  // }
+  async getParcelSizes() {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_parcel_sizes');
+    return await api();
+  }
 
-  // async checkParcelStatus(data: CheckParcelStatusDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPParcelStatusBulk');
-  //   return await api({ bulk: [...data.bulk] });
-  // }
-
-  // async trackParcel(data: TrackingParcelDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPTrackingBulk');
-  //   return await api({ bulk: [...data.bulk] });
-  // }
-
-  // async checkCredit() {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPCheckCreditBalance');
-  //   return await api();
-  // }
-
-  // async expressOrder(data: ExpressOrderDto) {
-  //   const api = this.getApiCaller(HttpMethod.POST, 'EPSubmitOrderBulkV3');
-  //   // Preparing data
-  //   const bulk = [...data.bulk];
-  //   const courier = [...data.courier];
-  //   const dropoff = data.dropoff;
-
-  //   return await api({ bulk, courier, dropoff });
-  // }
+  async getContentTypes() {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_content_types');
+    return await api();
+  }
 }
