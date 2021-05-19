@@ -50,4 +50,52 @@ describe('Sendparcel Service', () => {
       expect(postcode.message).toBe('Missing [postcode] parameter/value');
     });
   });
+
+  describe('Check price', () => {
+    it('should return prices details', async () => {
+      const prices = await service.checkPrice({
+        sender_postcode: '55100',
+        receiver_postcode: '08000',
+        receiver_country_code: 'MY',
+        declared_weight: '0.1',
+      });
+      expect(prices.status).toBe(true);
+      expect(prices.message).toBe('success');
+      expect(prices).toHaveProperty('data');
+      expect(prices.data).toHaveProperty('prices');
+    });
+
+    it('should return invalid postcode error', async () => {
+      const prices = await service.checkPrice({
+        sender_postcode: '551001',
+        receiver_postcode: '08000',
+        receiver_country_code: 'MY',
+        declared_weight: '0.1',
+      });
+      expect(prices.status).toBe(false);
+      expect(prices.message).toBe(
+        'Invalid [sender_postcode]. "551001" does not exist',
+      );
+    });
+  });
+
+  describe('Get parcel sizes', () => {
+    it('should return parcel sizes', async () => {
+      const parcels = await service.getParcelSizes();
+      expect(parcels.status).toBe(true);
+      expect(parcels.message).toBe('success');
+      expect(parcels).toHaveProperty('data');
+      expect(parcels.data).toHaveProperty('flyers_s');
+    });
+  });
+
+  describe('Get content types', () => {
+    it('should return content types', async () => {
+      const parcels = await service.getContentTypes();
+      expect(parcels.status).toBe(true);
+      expect(parcels.message).toBe('success');
+      expect(parcels).toHaveProperty('data');
+      expect(parcels.data).toHaveProperty('outdoors');
+    });
+  });
 });
