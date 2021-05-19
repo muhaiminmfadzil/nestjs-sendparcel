@@ -2,6 +2,7 @@ require('dotenv').config();
 import { HttpService } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SendparcelService } from './sendparcel.service';
+import { nanoid } from 'nanoid';
 
 const { APIKEY } = process.env;
 
@@ -309,7 +310,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Check price bulk', () => {
+  xdescribe('Check price bulk', () => {
     it('should return price bulk detail for single item', async () => {
       const priceBulk = await service.checkPriceBulk({
         shipments: [
@@ -354,6 +355,122 @@ describe('Sendparcel Service', () => {
       expect(priceBulk.data[0].message).toBe('success');
       expect(priceBulk.data[1].status).toBe(true);
       expect(priceBulk.data[1].message).toBe('success');
+    });
+  });
+
+  describe('Create awb bulk', () => {
+    it('should return awb detail for single item', async () => {
+      // Override timeout jest
+      jest.setTimeout(30000);
+
+      const orderId = nanoid();
+
+      const awbBulk = await service.createBulkAwb({
+        shipments: [
+          {
+            integration_order_id: orderId,
+            send_method: 'dropoff',
+            send_date: '2021-06-01',
+            type: 'document',
+            declared_weight: '0.1',
+            size: 'flyers_l',
+            provider_code: 'poslaju',
+            content_type: 'general',
+            content_description: 'DIY item',
+            content_value: '15',
+            sender_name: 'Muhaimin bin Mohd Fadzil',
+            sender_phone: '0174170019',
+            sender_email: 'muhaiminmfadzil@gmail.com',
+            sender_address_line_1: 'Hello World',
+            sender_postcode: '55100',
+            receiver_name: 'Tun Mahathir 1',
+            receiver_phone: '0199999999',
+            receiver_email: 'tun@mahathir.com',
+            receiver_address_line_1: 'Jabatan Perdana Menteri',
+            receiver_address_line_2: 'Bulatan Utama Putrajaya',
+            receiver_address_line_3: '',
+            receiver_address_line_4: '',
+            receiver_postcode: '62000',
+            receiver_country_code: 'MY',
+          },
+        ],
+      });
+      expect(awbBulk.status).toBe(true);
+      expect(awbBulk.message).toBe('success');
+      expect(awbBulk).toHaveProperty('data');
+      expect(awbBulk.data.tracking_no).toHaveLength(1);
+      expect(awbBulk.data.tracking_no[0].integration_order_id).toBe(orderId);
+    });
+
+    it('should return awb bulk detail for multiple items', async () => {
+      // Override timeout jest
+      jest.setTimeout(30000);
+
+      const orderId2 = nanoid();
+      const orderId3 = nanoid();
+
+      const awbBulk = await service.createBulkAwb({
+        shipments: [
+          {
+            integration_order_id: orderId2,
+            send_method: 'dropoff',
+            send_date: '2021-06-01',
+            type: 'document',
+            declared_weight: '0.1',
+            size: 'flyers_l',
+            provider_code: 'poslaju',
+            content_type: 'general',
+            content_description: 'DIY item',
+            content_value: '15',
+            sender_name: 'Muhaimin bin Mohd Fadzil',
+            sender_phone: '0174170019',
+            sender_email: 'muhaiminmfadzil@gmail.com',
+            sender_address_line_1: 'Hello World',
+            sender_postcode: '55100',
+            receiver_name: 'Tun Mahathir 2',
+            receiver_phone: '0199999999',
+            receiver_email: 'tun@mahathir.com',
+            receiver_address_line_1: 'Jabatan Perdana Menteri',
+            receiver_address_line_2: 'Bulatan Utama Putrajaya',
+            receiver_address_line_3: '',
+            receiver_address_line_4: '',
+            receiver_postcode: '62000',
+            receiver_country_code: 'MY',
+          },
+          {
+            integration_order_id: orderId3,
+            send_method: 'dropoff',
+            send_date: '2021-06-01',
+            type: 'document',
+            declared_weight: '0.1',
+            size: 'flyers_l',
+            provider_code: 'poslaju',
+            content_type: 'general',
+            content_description: 'DIY item',
+            content_value: '15',
+            sender_name: 'Muhaimin bin Mohd Fadzil',
+            sender_phone: '0174170019',
+            sender_email: 'muhaiminmfadzil@gmail.com',
+            sender_address_line_1: 'Hello World',
+            sender_postcode: '55100',
+            receiver_name: 'Tun Mahathir 3',
+            receiver_phone: '0199999999',
+            receiver_email: 'tun@mahathir.com',
+            receiver_address_line_1: 'Jabatan Perdana Menteri',
+            receiver_address_line_2: 'Bulatan Utama Putrajaya',
+            receiver_address_line_3: '',
+            receiver_address_line_4: '',
+            receiver_postcode: '62000',
+            receiver_country_code: 'MY',
+          },
+        ],
+      });
+      expect(awbBulk.status).toBe(true);
+      expect(awbBulk.message).toBe('success');
+      expect(awbBulk).toHaveProperty('data');
+      expect(awbBulk.data.tracking_no).toHaveLength(2);
+      expect(awbBulk.data.tracking_no[0].integration_order_id).toBe(orderId2);
+      expect(awbBulk.data.tracking_no[1].integration_order_id).toBe(orderId3);
     });
   });
 });
