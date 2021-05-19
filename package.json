@@ -1,6 +1,6 @@
 {
   "name": "nestjs-sendparcel",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "Sendparcel API wrapper for NestJS framework",
   "author": "Muhaimin <muhaiminmfadzil@gmail.com>",
   "license": "UNLICENSED",
@@ -48,7 +48,6 @@
     "rxjs": "^6.6.6"
   },
   "devDependencies": {
-    "dotenv": "^9.0.2",
     "@nestjs/cli": "^7.6.0",
     "@nestjs/schematics": "^7.3.0",
     "@nestjs/testing": "^7.6.15",
@@ -58,6 +57,7 @@
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "dotenv": "^9.0.2",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
