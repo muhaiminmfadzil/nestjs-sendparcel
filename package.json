@@ -1,6 +1,6 @@
 {
   "name": "nestjs-sendparcel",
-  "version": "1.0.1",
+  "version": "0.0.9",
   "description": "Sendparcel API wrapper for NestJS framework",
   "author": "Muhaimin <muhaiminmfadzil@gmail.com>",
   "license": "UNLICENSED",
