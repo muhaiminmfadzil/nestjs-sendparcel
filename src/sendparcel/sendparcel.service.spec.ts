@@ -29,7 +29,7 @@ describe('Sendparcel Service', () => {
     expect(service).toBeDefined();
   });
 
-  xdescribe('Get me details', () => {
+  describe('Get me details', () => {
     it('should return me details', async () => {
       const me = await service.me();
       expect(me.status).toBe(true);
@@ -37,7 +37,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get postcode details', () => {
+  describe('Get postcode details', () => {
     it('should return postcode details', async () => {
       const postcode = await service.getPostcodeDetails({ postcode: '08000' });
       expect(postcode.status).toBe(true);
@@ -52,7 +52,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Check price', () => {
+  describe('Check price', () => {
     it('should return prices details', async () => {
       const prices = await service.checkPrice({
         sender_postcode: '55100',
@@ -80,7 +80,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get parcel sizes', () => {
+  describe('Get parcel sizes', () => {
     it('should return parcel sizes', async () => {
       const parcels = await service.getParcelSizes();
       expect(parcels.status).toBe(true);
@@ -90,7 +90,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get content types', () => {
+  describe('Get content types', () => {
     it('should return content types', async () => {
       const parcels = await service.getContentTypes();
       expect(parcels.status).toBe(true);
@@ -100,7 +100,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Create shipment and checkout', () => {
+  describe('Create shipment and checkout', () => {
     const singleShipmentKey: string[] = [];
     const multipleShipmentKey: string[] = [];
 
@@ -252,7 +252,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get cart items', () => {
+  describe('Get cart items', () => {
     it('should return cart items', async () => {
       const cart = await service.getCartItems();
       expect(cart.status).toBe(true);
@@ -261,7 +261,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get shipment status', () => {
+  describe('Get shipment status', () => {
     it('should return shipment status', async () => {
       const shipment = await service.getShipmentStatus();
       expect(shipment.status).toBe(true);
@@ -270,7 +270,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get shipments', () => {
+  describe('Get shipments', () => {
     it('should return shipment for single item', async () => {
       const singleItem = ['5be39a53015bde092b44373bab440348'];
 
@@ -300,7 +300,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Get shipment history', () => {
+  describe('Get shipment history', () => {
     it('should return shipment history', async () => {
       const shipment = await service.getShipmentHistory();
       expect(shipment.status).toBe(true);
@@ -310,7 +310,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  xdescribe('Check price bulk', () => {
+  describe('Check price bulk', () => {
     it('should return price bulk detail for single item', async () => {
       const priceBulk = await service.checkPriceBulk({
         shipments: [
