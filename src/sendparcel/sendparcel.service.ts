@@ -165,4 +165,9 @@ export class SendparcelService {
     const api = this.getApiCaller(HttpMethod.POST, 'get_shipments');
     return await api(data);
   }
+
+  async getShipmentHistory() {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_shipment_history');
+    return await api();
+  }
 }

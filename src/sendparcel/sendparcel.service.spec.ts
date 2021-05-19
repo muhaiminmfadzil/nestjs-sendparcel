@@ -298,4 +298,14 @@ describe('Sendparcel Service', () => {
       expect(shipment.data).toHaveProperty(multipleItems[1]);
     });
   });
+
+  xdescribe('Get shipment history', () => {
+    it('should return shipment history', async () => {
+      const shipment = await service.getShipmentHistory();
+      expect(shipment.status).toBe(true);
+      expect(shipment.message).toBe('success');
+      expect(shipment).toHaveProperty('data');
+      expect(shipment.data).toHaveProperty('shipments');
+    });
+  });
 });
