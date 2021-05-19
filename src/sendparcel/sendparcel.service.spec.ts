@@ -28,7 +28,7 @@ describe('Sendparcel Service', () => {
     expect(service).toBeDefined();
   });
 
-  describe('Get me details', () => {
+  xdescribe('Get me details', () => {
     it('should return me details', async () => {
       const me = await service.me();
       expect(me.status).toBe(true);
@@ -36,7 +36,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Get postcode details', () => {
+  xdescribe('Get postcode details', () => {
     it('should return postcode details', async () => {
       const postcode = await service.getPostcodeDetails({ postcode: '08000' });
       expect(postcode.status).toBe(true);
@@ -51,7 +51,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Check price', () => {
+  xdescribe('Check price', () => {
     it('should return prices details', async () => {
       const prices = await service.checkPrice({
         sender_postcode: '55100',
@@ -79,7 +79,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Get parcel sizes', () => {
+  xdescribe('Get parcel sizes', () => {
     it('should return parcel sizes', async () => {
       const parcels = await service.getParcelSizes();
       expect(parcels.status).toBe(true);
@@ -89,7 +89,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Get content types', () => {
+  xdescribe('Get content types', () => {
     it('should return content types', async () => {
       const parcels = await service.getContentTypes();
       expect(parcels.status).toBe(true);
@@ -306,6 +306,54 @@ describe('Sendparcel Service', () => {
       expect(shipment.message).toBe('success');
       expect(shipment).toHaveProperty('data');
       expect(shipment.data).toHaveProperty('shipments');
+    });
+  });
+
+  describe('Check price bulk', () => {
+    it('should return price bulk detail for single item', async () => {
+      const priceBulk = await service.checkPriceBulk({
+        shipments: [
+          {
+            sender_postcode: '53000',
+            receiver_postcode: '55100',
+            receiver_country_code: 'MY',
+            declared_weight: '0.1',
+          },
+        ],
+      });
+      expect(priceBulk.status).toBe(true);
+      expect(priceBulk.message).toBe('success');
+      expect(priceBulk).toHaveProperty('data');
+      expect(priceBulk.data).toHaveLength(1);
+      expect(priceBulk.data[0].status).toBe(true);
+      expect(priceBulk.data[0].message).toBe('success');
+    });
+
+    it('should return price bulk detail for multiple items', async () => {
+      const priceBulk = await service.checkPriceBulk({
+        shipments: [
+          {
+            sender_postcode: '53000',
+            receiver_postcode: '55100',
+            receiver_country_code: 'MY',
+            declared_weight: '0.1',
+          },
+          {
+            sender_postcode: '55100',
+            receiver_postcode: '08000',
+            receiver_country_code: 'MY',
+            declared_weight: '0.1',
+          },
+        ],
+      });
+      expect(priceBulk.status).toBe(true);
+      expect(priceBulk.message).toBe('success');
+      expect(priceBulk).toHaveProperty('data');
+      expect(priceBulk.data).toHaveLength(2);
+      expect(priceBulk.data[0].status).toBe(true);
+      expect(priceBulk.data[0].message).toBe('success');
+      expect(priceBulk.data[1].status).toBe(true);
+      expect(priceBulk.data[1].message).toBe('success');
     });
   });
 });

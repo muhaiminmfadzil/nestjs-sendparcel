@@ -1,4 +1,5 @@
 import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
+import { CheckPriceBulkDto } from './dto/check-price-bulk.dto';
 import { CheckPriceDto } from './dto/check-price.dto';
 import { CheckoutDto } from './dto/checkout.dto';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
@@ -174,6 +175,11 @@ export class SendparcelService {
 
   async getConsigmentNote(data: GetConsignmentNoteDto) {
     const api = this.getApiCaller(HttpMethod.POST, 'get_consignment_note');
+    return await api(data);
+  }
+
+  async checkPriceBulk(data: CheckPriceBulkDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'check_price_bulk');
     return await api(data);
   }
 }
