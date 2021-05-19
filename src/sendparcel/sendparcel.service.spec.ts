@@ -99,7 +99,7 @@ describe('Sendparcel Service', () => {
     });
   });
 
-  describe('Create shipment and checkout', () => {
+  xdescribe('Create shipment and checkout', () => {
     const singleShipmentKey: string[] = [];
     const multipleShipmentKey: string[] = [];
 
@@ -253,6 +253,15 @@ describe('Sendparcel Service', () => {
 
   describe('Get cart items', () => {
     it('should return cart items', async () => {
+      const parcels = await service.getCartItems();
+      expect(parcels.status).toBe(true);
+      expect(parcels.message).toBe('success');
+      expect(parcels).toHaveProperty('data');
+    });
+  });
+
+  describe('Get shipment status', () => {
+    it('should shipment status', async () => {
       const parcels = await service.getCartItems();
       expect(parcels.status).toBe(true);
       expect(parcels.message).toBe('success');

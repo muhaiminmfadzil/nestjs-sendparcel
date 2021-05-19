@@ -154,4 +154,9 @@ export class SendparcelService {
     const api = this.getApiCaller(HttpMethod.POST, 'checkout');
     return await api(data);
   }
+
+  async getShipmentStatus() {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_shipment_statuses');
+    return await api();
+  }
 }
