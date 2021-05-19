@@ -98,4 +98,70 @@ describe('Sendparcel Service', () => {
       expect(parcels.data).toHaveProperty('outdoors');
     });
   });
+
+  describe('Create shipment', () => {
+    it('should return shipment with success status', async () => {
+      const shipment = await service.createShipment({
+        send_method: 'dropoff',
+        send_date: '2021-06-01',
+        type: 'document',
+        declared_weight: '0.1',
+        size: 'flyers_l',
+        provider_code: 'poslaju',
+        content_type: 'general',
+        content_description: 'DIY item',
+        content_value: '15',
+        sender_name: 'Muhaimin bin Mohd Fadzil',
+        sender_phone: '0174170019',
+        sender_email: 'muhaiminmfadzil@gmail.com',
+        sender_address_line_1: 'Hello World',
+        sender_postcode: '55100',
+        receiver_name: 'Tun Mahathir',
+        receiver_phone: '0199999999',
+        receiver_email: 'tun@mahathir.com',
+        receiver_address_line_1: 'Jabatan Perdana Menteri',
+        receiver_address_line_2: 'Bulatan Utama Putrajaya',
+        receiver_address_line_3: '',
+        receiver_address_line_4: '',
+        receiver_postcode: '62000',
+        receiver_country_code: 'MY',
+      });
+      expect(shipment.status).toBe(true);
+      expect(shipment.message).toBe('success');
+      expect(shipment).toHaveProperty('data');
+      expect(shipment.data.send_method).toBe('dropoff');
+    });
+
+    it('should return postcode error status', async () => {
+      const shipment = await service.createShipment({
+        send_method: 'dropoff',
+        send_date: '2021-06-01',
+        type: 'document',
+        declared_weight: '0.1',
+        size: 'flyers_l',
+        provider_code: 'poslaju',
+        content_type: 'general',
+        content_description: 'DIY item',
+        content_value: '15',
+        sender_name: 'Muhaimin bin Mohd Fadzil',
+        sender_phone: '0174170019',
+        sender_email: 'muhaiminmfadzil@gmail.com',
+        sender_address_line_1: 'Hello World',
+        sender_postcode: '55100',
+        receiver_name: 'Tun Mahathir',
+        receiver_phone: '0199999999',
+        receiver_email: 'tun@mahathir.com',
+        receiver_address_line_1: 'Jabatan Perdana Menteri',
+        receiver_address_line_2: 'Bulatan Utama Putrajaya',
+        receiver_address_line_3: '',
+        receiver_address_line_4: '',
+        receiver_postcode: '620001',
+        receiver_country_code: 'MY',
+      });
+      expect(shipment.status).toBe(false);
+      expect(shipment.message).toBe(
+        'Receiver Postcode [receiver_postcode] is invalid',
+      );
+    });
+  });
 });

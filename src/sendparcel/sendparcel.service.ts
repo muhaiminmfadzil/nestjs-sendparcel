@@ -1,5 +1,6 @@
 import { HttpService, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { CheckPriceDto } from './dto/check-price.dto';
+import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { GetPostcodeDetailsDto } from './dto/get-postcode-details.dto';
 import {
   CONFIG_OPTIONS,
@@ -143,5 +144,10 @@ export class SendparcelService {
   async getContentTypes() {
     const api = this.getApiCaller(HttpMethod.POST, 'get_content_types');
     return await api();
+  }
+
+  async createShipment(data: CreateShipmentDto) {
+    const api = this.getApiCaller(HttpMethod.POST, 'create_shipment');
+    return await api(data);
   }
 }
