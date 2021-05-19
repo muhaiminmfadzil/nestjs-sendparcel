@@ -150,4 +150,9 @@ export class SendparcelService {
     const api = this.getApiCaller(HttpMethod.POST, 'create_shipment');
     return await api(data);
   }
+
+  async getCartItems() {
+    const api = this.getApiCaller(HttpMethod.POST, 'get_cart_items');
+    return await api();
+  }
 }
