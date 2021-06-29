@@ -1,0 +1,35 @@
+export class CreateShipmentDto {
+  // Required
+  send_method: string;
+  send_date: string;
+  type: string;
+  declared_weight: string;
+  size: string;
+  provider_code: string;
+  content_type: string;
+  content_description: string;
+  content_value: string;
+  sender_name: string;
+  sender_phone: string;
+  sender_address_line_1: string;
+  sender_postcode: string;
+  receiver_name: string;
+  receiver_phone: string;
+  receiver_address_line_1: string;
+  receiver_postcode: string;
+  receiver_country_code: string;
+  // Optional
+  width?: string;
+  length?: string;
+  height?: string;
+  sender_company_name?: string;
+  sender_email?: string;
+  sender_address_line_2?: string;
+  sender_address_line_3?: string;
+  sender_address_line_4?: string;
+  sender_country_code?: string;
+  receiver_email?: string;
+  receiver_address_line_2?: string;
+  receiver_address_line_3?: string;
+  receiver_address_line_4?: string;
+}
