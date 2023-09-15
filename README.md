@@ -4,7 +4,7 @@
 
 ## Description
 
-Sendparcel api wrapper for NestJs
+Sendparcel api wrapper for NestJS
 
 ## Installation
 
